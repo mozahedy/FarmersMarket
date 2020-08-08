@@ -6,9 +6,9 @@ var cors = require('cors');
 var logger = require('morgan');
 const connectDB =require('./db/connection');
 const farmersRoute = require('./routes/farmers');
-// const customersRoute = require('./routes/customers');
-// const ordersRoute = require('./routes/orders');
-//
+const customersRoute = require('./routes/customers');
+const ordersRoute = require('./routes/orders');
+
 connectDB();
 var app = express();
 
@@ -19,8 +19,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/api/farmers', farmersRoute);
-// app.use('/api/customers', customersRoute);
-// app.use('/api/orders', ordersRoute);
+app.use('/api/customers', customersRoute);
+app.use('/api/orders', ordersRoute);
 
 
 // catch 404 and forward to error handler
