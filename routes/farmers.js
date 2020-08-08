@@ -3,7 +3,7 @@ const router = express.Router();
 const { Farmer } = require('../models/farmer');
 const { Customer } = require('../models/customer');
 const { Order } = require('../models/order');
-//Test 
+
 router.post('/', async (req, res)=>{
     /*
     const { error } = validate(req.body);
