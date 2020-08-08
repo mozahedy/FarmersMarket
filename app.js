@@ -5,7 +5,9 @@ var cookieParser = require('cookie-parser');
 var cors = require('cors');
 var logger = require('morgan');
 const connectDB =require('./db/connection');
-const farmersRoute = require('./routes/farmer');
+const farmersRoute = require('./routes/farmers');
+const customersRoute = require('./routes/customers');
+const ordersRoute = require('./routes/orders');
 
 connectDB();
 var app = express();
