@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var cors = require('cors');
 var logger = require('morgan');
 const connectDB =require('./db/connection');
-const farmerRoute = require('./routes/farmer');
+const farmersRoute = require('./routes/farmer');
 
 connectDB();
 var app = express();
@@ -16,7 +16,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/api/farmers', farmerRoute);
+app.use('/api/farmers', farmersRoute);
+app.use('/api/customers', customersRoute);
+app.use('/api/orders', ordersRoute);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
