@@ -76,9 +76,13 @@ class farmerService {
 //Start of Fetch products in farmers product list 
     async deleteProducts(farmerId,productId){
        try{
-        let deleteproducts = await Farmer.updateOne({
+        console.log(farmerId,productId);
+        let deleteproducts = await Farmer.update({
             _id: farmerId},
-            {$pull:{"provided_products._id":productId}}); 
+            {$pull: { provided_products: 
+               {_id:productId } }},
+                {multi: true});
+
             if(deleteproducts){
                 return {data:deleteproducts}
             }
