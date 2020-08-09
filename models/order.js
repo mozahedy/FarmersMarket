@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { required } = require('joi');
 
 const Order = mongoose.model('Order', new mongoose.Schema({
-        customer_id: {
+        customer_id: {    //this will hold the customer email for future reference purpose
             type: String,
             required: true,
         },

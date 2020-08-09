@@ -50,11 +50,9 @@ module.exports.getAllOrdersOfCustomer = async (req, res, next) => {
     const status = req.params.status;
     const dateLower = req.body.dateLower;
     const dateUpper = req.body.dateUpper;
-    console.log(id, status, dateLower, dateUpper)
 
     try {
         const findResult = await orderService.findAllOrdersOfCustomer(id, status, dateLower, dateUpper)
-
         if (findResult.data) {
             findResult.status = 200;
             res.status(200).json(findResult)
@@ -69,8 +67,8 @@ module.exports.getAllOrdersOfCustomer = async (req, res, next) => {
 
 }
 
-// this middleware extracts the order sent from client side to be saved
-// and returns confirmation message to client side
+// this middleware receives the order status, id, pickupDateTime and the customerEmail, then updates the order status based on the order id  
+// and sends confirmation email to client
 module.exports.updateStatus = async (req, res, next) => {
     const orderId = req.params.orderId;
     console.log(orderId);
@@ -83,14 +81,14 @@ module.exports.updateStatus = async (req, res, next) => {
                 const dateInMilli = new Date(req.body.pickupDateTime);
                 const pickupDate = dateInMilli.toLocaleString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
                 const pickupTime = dateInMilli.toLocaleTimeString('en-US');
-
-                let respMsg = {status:200, data: `Dear Customer, \n\n Your order is ready! We are pleased to inform you that your order is ready for pick-up on ${pickupDate} at ${pickupTime}`};
-                // respMsg = await emailGennerator('Customer', 'Your order is ready!', `We are pleased to inform you that your order is ready for pick-up on ${pickupDate} at ${pickupDate}`);
-                // respMsg.status = 200;
-                // respMsg.data = {};
+                
+                respMsg = await emailGennerator(req.body.customerEmail,'Customer', 'Your order is ready!', `We are pleased to inform you that your order is ready for pick-up on ${pickupDate} at ${pickupDate}`);
+                console.log(respMsg)
+                respMsg.status = 200;
+                respMsg.data = {};
                 res.status(200).json(respMsg);
             } else if (req.body.status === 'completed') {
-                res.status(200).json({ status: 200, data: 'successfully updated status to completed' });
+                res.status(200).json({ status: 200, data:{}, msg: 'successfully updated status to completed' });
             }
         }
         if (persistResult.error) {
