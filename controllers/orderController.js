@@ -67,8 +67,8 @@ module.exports.getAllOrdersOfCustomer = async (req, res, next) => {
 
 }
 
-// this middleware extracts the order sent from client side to be saved
-// and returns confirmation message to client side
+// this middleware receives the order status, id, pickupDateTime and the customerEmail, then updates the order status based on the order id  
+// and sends confirmation email to client
 module.exports.updateStatus = async (req, res, next) => {
     const orderId = req.params.orderId;
     console.log(orderId);
@@ -81,7 +81,8 @@ module.exports.updateStatus = async (req, res, next) => {
                 const dateInMilli = new Date(req.body.pickupDateTime);
                 const pickupDate = dateInMilli.toLocaleString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
                 const pickupTime = dateInMilli.toLocaleTimeString('en-US');
-                respMsg = await emailGennerator('melakeselammoges@gmail.com','Customer', 'Your order is ready!', `We are pleased to inform you that your order is ready for pick-up on ${pickupDate} at ${pickupDate}`);
+                
+                respMsg = await emailGennerator(req.body.customerEmail,'Customer', 'Your order is ready!', `We are pleased to inform you that your order is ready for pick-up on ${pickupDate} at ${pickupDate}`);
                 console.log(respMsg)
                 respMsg.status = 200;
                 respMsg.data = {};
