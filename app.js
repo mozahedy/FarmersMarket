@@ -5,8 +5,8 @@ var cookieParser = require('cookie-parser');
 var cors = require('cors');
 var logger = require('morgan');
 const connectDB =require('./db/connection');
-// const farmersRoute = require('./routes/farmers');
-// const customersRoute = require('./routes/customers');
+const farmersRoute = require('./routes/farmers');
+const customersRoute = require('./routes/customers');
 const ordersRoute = require('./routes/orders');
 
 connectDB();
@@ -18,8 +18,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// app.use('/api/farmers', farmersRoute);
-// app.use('/api/customers', customersRoute);
+app.use('/api/farmers', farmersRoute);
+app.use('/api/customers', customersRoute);
 app.use('/api/orders', ordersRoute);
 
 
