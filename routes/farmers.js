@@ -16,4 +16,7 @@ router.post('/:id/addproduct',authRequest ,farmerController.addProducts);
 //router to fetch products from farmer product list 
 router.get('/:id/fetch' ,authRequest ,farmerController.getProducts);
 
+//router to fetch products from farmer product list 
+router.patch('/:id/delete',farmerController.deleteProducts);
+
 module.exports = router;
