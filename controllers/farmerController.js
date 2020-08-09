@@ -2,6 +2,8 @@ const farmerService = require('../services/farmerServices');
 const farmerMOdel = require ('../models/farmer');
 const upload = require('../services/uploadImage');
 
+
+//Farmer Registration Controller 
 module.exports.farmerRegistration = async(req, res , next) => {
     const farmer=req.body;
 
@@ -16,6 +18,8 @@ module.exports.farmerRegistration = async(req, res , next) => {
           }
     }  catch (e) { }
 }
+
+
 
 // Thid Module is to sign in the farmer into his account
 module.exports.farmerSignIn = async(req,res,next) => {
@@ -37,9 +41,41 @@ module.exports.farmerSignIn = async(req,res,next) => {
 
 }
 
+
+
 //This Module is to Add Products into Farmers Product List 
 module.exports.addProducts = async(req,res,next) => {
            const body =req.body;
+           const farmerId = req.params.id;
+           try{
+                const result= await farmerService.addProducts(farmerId,body);
+               
+                if(result){
+                    result.satus=200;
+              res.status(200).json({status: "ok",
+              messege: "Product is Succesfully added",
+              name: result});
+                }
+           }catch(e){}
+
+
+}
+//End of Add Products into Farmers list Controller 
+
+
+//Get Products from Farmers product List 
+module.exports.getProducts= async (req,res,next) => {
+         const farmerId = req.params.id;
+        try{
+            const result= await farmerService.fetchProducts(farmerId);
+            if(result){
+                result.satus=200;
+          res.status(200).json({status: "ok",
+          messege: "List of ProductsS",
+          name: result.data.provided_products});
+            }
+        }catch(e){ res.status(400).json({error:"Error in getting projects", details: e}) }  
+}
            
            // Uploading file to AWS S3 server
            const productImage = upload.single('image');
@@ -63,7 +99,3 @@ module.exports.addProducts = async(req,res,next) => {
             }catch(e){ }
             
             }); 
-
-
-
-}

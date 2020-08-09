@@ -3,7 +3,7 @@ const { addProducts } = require('../controllers/farmerController');
 
 class farmerService {
     constructor() { }
-
+//Start Farmer registration service 
     async registerFarmer(newFarmer) {
         try {
             let newfarmer = new Farmer(newFarmer);
@@ -12,6 +12,8 @@ class farmerService {
             return ({ data: result });
         } catch (e) { return ({ error: e }) }
     }
+
+
 // Start of signin service
     async farmerSignIn(email, password) {
         try {           
@@ -53,7 +55,21 @@ class farmerService {
     }
     }catch(e) { return e}
     }
+
+//End of addProduct service 
+
+
+//Start of Fetch products in farmers product list 
+    async fetchProducts(farmerId){
+       try{
+        let fetch= await Farmer.findOne({
+            _id: farmerId,
+          });
+
+          if(fetch){
+              return {data:fetch}
+          }
+       }catch(e) { return e}
+    }
 }
-
-
 module.exports = new farmerService();
