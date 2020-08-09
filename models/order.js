@@ -41,6 +41,9 @@ const Order = mongoose.model('Order', new mongoose.Schema({
                 }
             }
         ],
+        pickup_date_time: {
+            type: Date
+        }
 }));
 
 /* 
