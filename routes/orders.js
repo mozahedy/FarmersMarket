@@ -3,10 +3,20 @@ const orderController = require('../controllers/orderController')
 const express = require('express');
 const router = express.Router();
 
-//this route will be accessed at the time of checkout
-router.get('/',orderController.save);
+//this route will be accessed by farmer to get all order history of specific 
+//status
+router.get('/:status/farmers/:farmerId',orderController.getAllOrdersOfFarmer);
+
+//this route will be accessed by customer to get all order history of specific 
+//status in time a time range. request body will hold time range
+router.post('/:status/customers/:customerId',orderController.getAllOrdersOfCustomer);
 
 //this route will be accessed at the time of checkout
 router.post('/',orderController.save);
+
+//this route will be accessed by farmer to update status
+//the order id will be sent as a url parameter and the status and pickup date-time
+//through the body
+router.patch('/:orderId',orderController.updateStatus);
 
 module.exports = router;
