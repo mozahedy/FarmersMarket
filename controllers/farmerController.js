@@ -2,6 +2,7 @@ const farmerService = require('../services/farmerServices');
 const farmerMOdel = require ('../models/farmer');
 const upload = require('../services/uploadImage');
 const getImage = require('../services/readImage');
+// const { catch } = require('../services/farmerServices');
 
 //Farmer Registration Controller 
 module.exports.farmerRegistration = async(req, res , next) => {
@@ -104,5 +105,22 @@ module.exports.deleteProducts = async(req,res,next) => {
       });
         }
     }catch(e){ res.status(400).json({error:"Error in getting projects", details: e}) } 
+}
+
+
+//Update products from farmer product list 
+module.exports.updateProducts = async(req,res,next) => {
+    const farmerId=req.params.id;
+      const {_id,name,category,unit,unit_price,inventory,image} = req.body;
+      try{
+            const result = await farmerService.updateProducts(farmerId,_id,name,category,unit,unit_price,inventory,image)
+            if(result){
+                result.satus=200;
+          res.status(200).json({status: "ok",
+          messege: "Product Updated",
+          body : result,
+          });
+            }
+        }catch(e) { return e}   
 }
         

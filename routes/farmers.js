@@ -20,5 +20,8 @@ router.get('/:id/fetch',farmerController.getProducts);
 //router to fetch products from farmer product list 
 router.patch('/:id/delete',farmerController.deleteProducts);
 
+//router to update products from farmer product list
+router.patch('/:id/update', farmerController.updateProducts);
+
 
 module.exports = router;
