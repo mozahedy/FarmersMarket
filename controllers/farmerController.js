@@ -1,5 +1,5 @@
 const farmerService = require('../services/farmerServices');
-const farmerMOdel = require ('../models/farmer');
+const {farmerMOdel}= require ('../models/farmer');
 const upload = require('../services/uploadImage');
 const getImage = require('../services/readImage');
 // const { catch } = require('../services/farmerServices');
@@ -7,17 +7,23 @@ const getImage = require('../services/readImage');
 //Farmer Registration Controller 
 module.exports.farmerRegistration = async(req, res , next) => {
     const farmer=req.body;
-
+     let check= Object.keys(farmer).length;
+       
     try {
+           if(check==0){
+            return next(new Error('No Farmer found in the Request body to Save'));
+           }
           const addFaremerResult = await farmerService.registerFarmer(farmer)
          
           if(addFaremerResult.data) {
-            addFaremerResult.satus=200;
-            res.status(200).json(addFaremerResult);
+              res.status(200).json({status: "ok",
+              message:"New Farmer is registered!",
+              name: result.data,});
+            
           }else{
               next(addFaremerResult.error);
           }
-    }  catch (e) { }
+    }  catch (e) {return next(e) }
 }
 
 
@@ -33,12 +39,13 @@ module.exports.farmerSignIn = async(req,res,next) => {
             if(result.data) {
               result.satus=200;
               res.status(200).json({status: "ok",
-              messege: "signed in",
+              messege: "Authenticated User",
+              message:"logged in user",
               name: result.data.name.firstname,});
             }else{
                 next(result.error);
             }
-      }  catch (e) { }
+      }  catch (e) { return next(e)}
 
 }
 

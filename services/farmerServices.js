@@ -3,27 +3,31 @@ const { addProducts } = require('../controllers/farmerController');
 
 class farmerService {
     constructor() { }
+
+
 //Start Farmer registration service 
     async registerFarmer(newFarmer) {
         try {
-            let newfarmer = new Farmer(newFarmer);
+            let result = new Farmer(newFarmer);
             result = await newfarmer.save();
-
             return ({ data: result });
         } catch (e) { return ({ error: e }) }
     }
 
 
+
+
 // Start of signin service
     async farmerSignIn(email, password) {
         try {           
-            let user = await Farmer.findOne({ email: email });
-    
+            let user = await Farmer.findOne({ email: email,password:password });
+        
             if (!user) {
                 return {error: 'Farmer not found'}
             }
 
             if (user) {
+                console.log(user);
                 return {data:user}
             }
 
@@ -73,7 +77,7 @@ class farmerService {
     }
 
 
-//Start of Fetch products in farmers product list service
+//Start of deleting products in farmers product list service
     async deleteProducts(farmerId,productId){
        try{
         
