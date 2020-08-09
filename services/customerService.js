@@ -24,7 +24,7 @@ class CustomerService {
         }
         account = acc;
         console.log(account);
-        return { data: bcrypt.compare(password, account.password) };
+        return { data: bcrypt.compare(password, account.password), custAccount:account };
       })
       .catch((err) => {
         return { error: err };

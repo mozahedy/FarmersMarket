@@ -8,29 +8,33 @@ module.exports.addCustomer = async function (req, res, next) {
   const customer = req.body;
   try {
     const response = await customerService.saveCustomer(customer);
-    if(response.data){
-        res.status(200).json(response.data);
-    } if(response.error){
-        return next(response.error);
+    if (response.data) {
+      res.status(200).json(response.data);
+    }
+    if (response.error) {
+      return next(response.error);
     }
   } catch (e) {
-      return next(e);
+    return next(e);
   }
 };
 
 /* customer signin */
-module.exports.signIn = async function (req, res, next){
-    const email = req.body.email;
-    const password = req.body.password;
-    try{
-        const response = await customerService.getCustomer(email,password);        
-        if(response.data){
-            res.status(200).json({message:'Authenticated'});
-        }  if(!response.error){
-            return next(response.error);
-        } 
-    }catch(e){
-        next(e);
+module.exports.signIn = async function (req, res, next) {
+  const email = req.body.email;
+  const password = req.body.password;
+  try {
+    const response = await customerService.getCustomer(email, password);
+    console.log(response);
+    if (response.data) {
+      res
+        .status(200)
+        .json({ message: 'Authenticated', account: response.custAccount });
     }
-
-}
+    if (!response.error) {
+      return next(response.error);
+    }
+  } catch (e) {
+    return next(e);
+  }
+};
