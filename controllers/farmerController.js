@@ -87,4 +87,22 @@ module.exports.getProducts= async (req,res,next) => {
             }
         }catch(e){ res.status(400).json({error:"Error in getting projects", details: e}) }  
 }
+
+
+
+//Delete products from farmers product list 
+module.exports.deleteProducts = async(req,res,next) => {
+      const farmerId=req.params.id;
+      const productId="5f2f72a3563d0c488c0dab4c";
+      
+      try{
+        const result= await farmerService.deleteProducts(farmerId,productId);
+        if(result){
+            result.satus=200;
+      res.status(200).json({status: "ok",
+      messege: "Product Deleted",
+      });
+        }
+    }catch(e){ res.status(400).json({error:"Error in getting projects", details: e}) } 
+}
         

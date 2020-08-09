@@ -71,5 +71,26 @@ class farmerService {
           }
        }catch(e) { return e}
     }
+
+
+//Start of Fetch products in farmers product list 
+    async deleteProducts(farmerId,productId){
+       try{
+        console.log(farmerId,productId);
+        let deleteproducts = await Farmer.update({
+            _id: farmerId},
+            {$pull: { provided_products: 
+               {_id:productId } }},
+                {multi: true});
+
+            if(deleteproducts){
+                return {data:deleteproducts}
+            }
+         }catch(e) { return e}
+
+       }catch(e) { return e}
+    
+
+
 }
 module.exports = new farmerService();
