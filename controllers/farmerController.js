@@ -16,7 +16,7 @@ module.exports.farmerRegistration = async(req, res , next) => {
     }  catch (e) { }
 }
 
-
+// Thid Module is to sign in the farmer into his account
 module.exports.farmerSignIn = async(req,res,next) => {
 
          const{email,password} = req.body;
@@ -33,5 +33,24 @@ module.exports.farmerSignIn = async(req,res,next) => {
                 next(result.error);
             }
       }  catch (e) { }
+
+}
+
+//This Module is to Add Products into Farmers Product List 
+module.exports.addProducts = async(req,res,next) => {
+           const body =req.body;
+           const farmerId = req.params.id;
+           try{
+                const result= await farmerService.addProducts(farmerId,body);
+                console.log(result)
+                if(result){
+                    result.satus=200;
+              res.status(200).json({status: "ok",
+              messege: "Product is Succesfully added",
+              name: result});
+                }
+           }catch(e){
+
+           }
 
 }
