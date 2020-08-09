@@ -73,10 +73,10 @@ class farmerService {
     }
 
 
-//Start of Fetch products in farmers product list 
+//Start of Fetch products in farmers product list service
     async deleteProducts(farmerId,productId){
        try{
-        console.log(farmerId,productId);
+        
         let deleteproducts = await Farmer.update({
             _id: farmerId},
             {$pull: { provided_products: 
@@ -90,7 +90,29 @@ class farmerService {
 
        }catch(e) { return e}
     
+//start of updating products from farmers product list service 
+   async updateProducts(farmerId,productId,name,category,unit,unit_price,inventory,image)
+   {
+       console.log(farmerId,productId)
+      try{
+            let updateProduct = await Farmer.findOneAndUpdate({
+                _id:farmerId,
+             provided_products : { $elemMatch : { _id :productId}}},
+            {  $set: {
+                "provided_products.$.name": name,
+                "provided_products.$.category": category,
+                "provided_products.$.unit": unit,
+                "provided_products.$.unit_price": unit_price,
+                "provided_products.$.inventory": inventory,
+                "provided_products.$.image": image,
+              },}
+            );
+            if(updateProduct){
+                return {data:updateProduct}
+            }
+      }catch(e) { return e}
 
+   }
 
 }
 module.exports = new farmerService();
