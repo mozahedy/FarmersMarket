@@ -1,7 +1,7 @@
 const farmerService = require('../services/farmerServices');
 const farmerMOdel = require ('../models/farmer');
 const upload = require('../services/uploadImage');
-
+const getImage = require('../services/readImage');
 
 //Farmer Registration Controller 
 module.exports.farmerRegistration = async(req, res , next) => {
@@ -54,8 +54,8 @@ module.exports.addProducts = async(req,res,next) => {
               if (err) 
                 return res.status(422).send({errors: [{title: 'File Upload Error', detail: err.message}] });
               let imageName = req.file.location.split('/');
-                       
-               body.image = imageName[3];
+               body.image = getImage(imageName[3]);
+               
                const farmerId = req.params.id;
                try{
                     const result= await farmerService.addProducts(farmerId,body);
