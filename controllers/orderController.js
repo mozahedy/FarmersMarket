@@ -84,11 +84,13 @@ module.exports.updateStatus = async (req, res, next) => {
                 const pickupDate = dateInMilli.toLocaleString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
                 const pickupTime = dateInMilli.toLocaleTimeString('en-US');
 
-                console.log('Customer', 'Your order is ready!', `We are pleased to inform you that your order is ready for pick-up on ${pickupDate} at ${pickupTime}`);
-                // emailGennerator('Customer','Your order is ready!',`We are pleased to inform you that your order is ready for pick-up on ${pickupDate} at ${pickupDate}`,'melakeselammoges@gmail.com');
-                res.status(200).json({ data: `Customer, Your order is ready!, We are pleased to inform you that your order is ready for pick-up on ${pickupDate} at ${pickupTime}` })
-            }else if(req.body.status === 'completed'){
-                res.status(200).json({ status:200, data: 'successfully updated status to completed'});
+                let respMsg = {status:200, data: `Dear Customer, \n\n Your order is ready! We are pleased to inform you that your order is ready for pick-up on ${pickupDate} at ${pickupTime}`};
+                // respMsg = await emailGennerator('Customer', 'Your order is ready!', `We are pleased to inform you that your order is ready for pick-up on ${pickupDate} at ${pickupDate}`);
+                // respMsg.status = 200;
+                // respMsg.data = {};
+                res.status(200).json(respMsg);
+            } else if (req.body.status === 'completed') {
+                res.status(200).json({ status: 200, data: 'successfully updated status to completed' });
             }
         }
         if (persistResult.error) {
