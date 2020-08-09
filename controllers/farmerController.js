@@ -1,7 +1,7 @@
 const farmerService = require('../services/farmerServices');
 const farmerMOdel = require ('../models/farmer');
 const upload = require('../services/uploadImage');
-
+const getImage = require('../services/readImage');
 
 //Farmer Registration Controller 
 module.exports.farmerRegistration = async(req, res , next) => {
@@ -54,8 +54,8 @@ module.exports.addProducts = async(req,res,next) => {
               if (err) 
                 return res.status(422).send({errors: [{title: 'File Upload Error', detail: err.message}] });
               let imageName = req.file.location.split('/');
-                       
-               body.image = imageName[3];
+               body.image = getImage(imageName[3]);
+               
                const farmerId = req.params.id;
                try{
                     const result= await farmerService.addProducts(farmerId,body);
@@ -86,5 +86,23 @@ module.exports.getProducts= async (req,res,next) => {
           name: result.data.provided_products});
             }
         }catch(e){ res.status(400).json({error:"Error in getting projects", details: e}) }  
+}
+
+
+
+//Delete products from farmers product list 
+module.exports.deleteProducts = async(req,res,next) => {
+      const farmerId=req.params.id;
+      const productId="5f2f72a3563d0c488c0dab4c";
+      
+      try{
+        const result= await farmerService.deleteProducts(farmerId,productId);
+        if(result){
+            result.satus=200;
+      res.status(200).json({status: "ok",
+      messege: "Product Deleted",
+      });
+        }
+    }catch(e){ res.status(400).json({error:"Error in getting projects", details: e}) } 
 }
         
