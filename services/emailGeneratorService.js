@@ -3,19 +3,30 @@
 
 const nodemailer = require("nodemailer");
 const Mailgen = require("mailgen");
+// const xoauth2 = require('xoauth2');
 
-const { PROVIDER, NAME, EMAIL, PASSWORD, MAIN_URL } = require("../config/config.json").app_email_access;
+const { PROVIDER, NAME, EMAIL, USER, PASSWORD, MAIN_URL } = require("../config/config.json").app_email_access;
 
-module.exports = (recepientName, subject, messageBody, emailAddress) => {
+module.exports = (recepientName, subject, messageBody) => {
 
     let transporter = nodemailer.createTransport({
         service: PROVIDER,
-        secure: false,
+        port: 2525,
         auth: {
-            user: EMAIL,
-            pass: PASSWORD,
-            
+            xoauth2: xoauth2.createXOAuth2Generator({
+
+            }),
+            type: "PLAIN",
+            user: USER,
+            clientId: '410497885631-fd3jeamk56ra23gjkcbad5pcaea8l3dc.apps.googleusercontent.com',
+            clientSecret: 'lrU2claZRc6iTxxLIRtKpcn',
+            refreshToken: '',
+            // pass: PASSWORD,
+  
         },
+        tls: {
+            rejectUnauthorized: false
+        }
     });
 
     let MailGenerator = new Mailgen({
@@ -37,8 +48,8 @@ module.exports = (recepientName, subject, messageBody, emailAddress) => {
     let mail = MailGenerator.generate(response);
 
     let message = {
-        from: EMAIL,
-        to: emailAddress,
+        from: USER,
+        to: EMAIL,
         subject: subject,
         html: mail,
     };
