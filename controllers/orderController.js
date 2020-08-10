@@ -127,7 +127,7 @@ module.exports.updateStatus = async (req, res, next) => {
                 const pickupDate = dateInMilli.toLocaleString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
                 const pickupTime = dateInMilli.toLocaleTimeString('en-US');
 
-                respMsg = await emailGennerator(req.body.customerEmail,'Customer', 'Your order is ready!', `We are pleased to inform you that your order is ready for pick-up on ${pickupDate} at ${pickupDate}`);
+                respMsg = await emailGennerator(req.body.customerEmail,'Customer', 'Your order is ready!', `We are pleased to inform you that your order is ready for pick-up on ${pickupDate} at ${pickupTime}`);
                 console.log(respMsg)
                 respMsg.status = 200;
                 respMsg.data = {};
