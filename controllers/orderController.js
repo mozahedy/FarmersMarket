@@ -24,9 +24,32 @@ module.exports.save = async (req, res, next) => {
 module.exports.getAllOrdersOfFarmer = async (req, res, next) => {
 
     const id = req.params.farmerId;
+
+    try {
+        const findResult = await orderService.findAllOrdersOfFarmer(id)
+
+        if (findResult.data) {
+            findResult.status = 200;
+            res.status(200).json(findResult)
+        } else if (persistResult.error) {
+            next(persistResult.error);
+        } else {
+            res.status(204);
+
+        }
+
+    } catch (e) { next(e) }
+
+}
+
+// this middleware extracts the order status and farmer id to 
+// get history of all orders that are of a specified status
+module.exports.getByStatusAllOrdersOfFarmer = async (req, res, next) => {
+
+    const id = req.params.farmerId;
     const status = req.params.status;
     try {
-        const findResult = await orderService.findAllOrdersOfFarmer(id, status)
+        const findResult = await orderService.findByStatusAllOrdersOfFarmer(id, status)
         console.log(findResult)
         if (findResult.data) {
             findResult.status = 200;
@@ -46,13 +69,35 @@ module.exports.getAllOrdersOfFarmer = async (req, res, next) => {
 // get history of all orders that satisfy the criteria
 module.exports.getAllOrdersOfCustomer = async (req, res, next) => {
 
-    const id = req.params.customerId;
+    const email = req.params.customerEmail;
+    try {
+        const findResult = await orderService.findAllOrdersOfCustomer(email)
+        if (findResult.data) {
+            findResult.status = 200;
+            res.status(200).json(findResult)
+        } else if (persistResult.error) {
+            next(persistResult.error);
+        } else {
+            res.status(204);
+
+        }
+
+    } catch (e) { next(e) }
+
+}
+
+
+// this middleware extracts the order status, date range and customer id to 
+// get history of all orders that satisfy the criteria
+module.exports.getByStatusAllOrdersOfCustomer = async (req, res, next) => {
+
+    const email = req.params.customerEmail;
     const status = req.params.status;
     const dateLower = req.body.dateLower;
     const dateUpper = req.body.dateUpper;
 
     try {
-        const findResult = await orderService.findAllOrdersOfCustomer(id, status, dateLower, dateUpper)
+        const findResult = await orderService.findByStatusAllOrdersOfCustomer(email, status, dateLower, dateUpper)
         if (findResult.data) {
             findResult.status = 200;
             res.status(200).json(findResult)
