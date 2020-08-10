@@ -7,33 +7,49 @@ class farmerService {
 
 //Start Farmer registration service 
     async registerFarmer(newFarmer) {
-        try {
-            let result = new Farmer(newFarmer);
-            result = await newfarmer.save();
-            return ({ data: result });
-        } catch (e) { return ({ error: e }) }
+        
+        try {          
+            let farmer = new Farmer(newFarmer);
+            let lastResult = await farmer.save();
+
+                 return { data: lastResult };
+            }
+         catch (e) { 
+            return { error: e};
+         } 
     }
 
 
 
 
 // Start of signin service
-    async farmerSignIn(email, password) {
+    async farmerSignIn(email) {       
         try {           
-            let user = await Farmer.findOne({ email: email,password:password });
-        
+            let user = await Farmer.findOne({ email: email });      
             if (!user) {
                 return {error: 'Farmer not found'}
             }
-
             if (user) {
-                console.log(user);
                 return {data:user}
             }
-
         } catch (e) { return ({ error: e }) }
+
+
+        
     }
 //end of signin service
+
+
+//Start of Fetch Farmers in farmers list service
+async fetchFarmers(){
+    try{
+     let fetch= await Farmer.find();
+       if(fetch){
+           return {data:fetch};
+       }
+    }catch(e) { return e}
+ }
+
 
 
 

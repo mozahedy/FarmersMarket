@@ -4,11 +4,15 @@ const farmerController = require('../controllers/farmerController');
 const password = require('../middlewares/password');
 const { authRequest } = require('../middlewares/authRequest');
 
-router.post('/signup',password.encrypt, farmerController.farmerRegistration);
 
+
+router.post('/signup', farmerController.farmerRegistration);
 
 //router for the farmer to be signed in 
 router.post('/signin',farmerController.farmerSignIn);
+
+//router to fetch Farmer from farmer list 
+router.get('/fetchfarmers',farmerController.getFarmers);
  
 //router for adding new Products 
 router.post('/:id/addproduct',authRequest ,farmerController.addProducts);
