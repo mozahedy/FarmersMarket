@@ -7,7 +7,7 @@ module.exports.save = async (req, res, next) => {
     const anOrder = req.body;
     try {
         const persistResult = await orderService.save(anOrder)
-
+        console.log(persistResult)
         if (persistResult.data) {
             persistResult.status = 200;
             res.status(200).json(persistResult)
@@ -81,7 +81,7 @@ module.exports.updateStatus = async (req, res, next) => {
                 const dateInMilli = new Date(req.body.pickupDateTime);
                 const pickupDate = dateInMilli.toLocaleString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
                 const pickupTime = dateInMilli.toLocaleTimeString('en-US');
-                
+
                 respMsg = await emailGennerator(req.body.customerEmail,'Customer', 'Your order is ready!', `We are pleased to inform you that your order is ready for pick-up on ${pickupDate} at ${pickupDate}`);
                 console.log(respMsg)
                 respMsg.status = 200;
