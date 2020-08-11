@@ -84,7 +84,8 @@ const Customer = mongoose.model('Customer', new mongoose.Schema({
         }],
         farmer_id: {
             type: String,
-            required: true
+            required: false,
+            default: 'John Doe'
         }
     }
 }));
