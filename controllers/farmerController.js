@@ -36,14 +36,10 @@ module.exports.farmerSignIn = async (req, res, next) => {
   try {
     const result = await farmerService.farmerSignIn(email)
 
-    if (result.data) {
-      result.satus = 200;
-      res.status(200).json({
-        status: "ok",
-        messege: "Authenticated User",
-        message: "logged in user",
-        name: result.data.name.firstname,
-      });
+    if (result.account) {
+      res
+      .status(200)
+      .json({ status: "ok", account: result.account, token: result.account });
     } else {
       next(createError(401, "Authorization Failed"));
     }
