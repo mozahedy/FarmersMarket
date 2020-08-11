@@ -9,6 +9,7 @@ const connectDB =require('./db/connection');
 const farmersRoute = require('./routes/farmers');
 const customersRoute = require('./routes/customers');
 const ordersRoute = require('./routes/orders');
+const uploadRoute = require('./routes/upload');
 
 connectDB();
 var app = express();
@@ -27,7 +28,7 @@ app.use(cookieParser());
 app.use('/api/farmers', farmersRoute);
 app.use('/api/customers', customersRoute);
 app.use('/api/orders', ordersRoute);
-
+app.use('/api/upload', uploadRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
