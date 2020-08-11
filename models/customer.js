@@ -63,7 +63,7 @@ const Customer = mongoose.model('Customer', new mongoose.Schema({
     shopping_cart: {
         items: [{
             product: {
-                product_name: {
+                name: {
                     type: String,
                     required: true
                 },
