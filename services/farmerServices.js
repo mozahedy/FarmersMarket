@@ -118,7 +118,6 @@ async fetchFarmers(){
 //start of updating products from farmers product list service 
    async updateProducts(farmerId,productId,name,category,unit,unit_price,inventory,image)
    {
-       console.log(farmerId,productId)
       try{
             let updateProduct = await Farmer.findOneAndUpdate({
                 _id:farmerId,

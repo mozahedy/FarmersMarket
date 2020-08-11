@@ -10,7 +10,6 @@ module.exports.addCustomer = async function (req, res, next) {
   const customer = req.body;
   try {
     const response = await customerService.saveCustomer(customer);
-    console.log(response);
     if (response.data) {
       res.status(200).json(response);
     }
