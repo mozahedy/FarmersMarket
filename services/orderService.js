@@ -12,8 +12,28 @@ module.exports.save = async (order) => {
 }
 
 //this function is used when searching for all orders of a farmer 
+
+module.exports.findAllOrdersOfFarmer = async (id) => {
+
+    try {
+        const result = await Order.aggregate([
+            {
+                $match: {
+                    $and: [
+                        { farmer_id: id }
+                    ]
+                }
+            }
+        ]);
+        return { data: result };
+    } catch (e) {
+        return { error: e }
+    }
+}
+
+//this function is used when searching for all orders of a farmer 
 //filtered by status
-module.exports.findAllOrdersOfFarmer = async (id, status) => {
+module.exports.findByStatusAllOrdersOfFarmer = async (id, status) => {
 
     try {
         const result = await Order.aggregate([
@@ -32,11 +52,34 @@ module.exports.findAllOrdersOfFarmer = async (id, status) => {
 }
 
 //this function is used when searching for all orders history of a customer
-//filtered by status and a lower and upper boundry for order date in YYYY-MM-DD string format
-module.exports.findAllOrdersOfCustomer = async (id, status, dateLower, dateUpper) => {
+
+module.exports.findAllOrdersOfCustomer = async (email) => {
 
     try {
-        const result = await Order.find({customer_id: id,  status: status, order_date: {$gte:new Date(dateLower),$lte: new Date(dateUpper)}})
+        const result = await Order.find({customer_email: email})
+
+        return { data: result };
+    } catch (e) {
+        return { error: e }
+    }
+}
+
+//this function is used when searching for all orders history of a customer
+//filtered by status and a lower and upper boundry for order date in YYYY-MM-DD string format
+module.exports.findByStatusAllOrdersOfCustomer = async (email, status, dateLower, dateUpper) => {
+
+    let query = {customer_email: email};
+    if(status != 'all')
+    query.status = status;
+    if(dateLower===null && dateUpper!==null)
+    query.order_date = {$lte: new Date(dateUpper)};
+    if(dateLower!==null && dateUpper===null)
+    query.order_date = {$gte: new Date(dateUpper)};
+    if(dateLower!==null && dateUpper!==null)
+    query.order_date = {$gte:new Date(dateLower),$lte: new Date(dateUpper)};
+
+    try {
+        const result = await Order.find(query)
 
         return { data: result };
     } catch (e) {
