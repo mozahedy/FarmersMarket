@@ -17,7 +17,7 @@ module.exports.farmerRegistration = async (req, res, next) => {
 
     if (addFarmerResult.data) {
       
-      res.status(200).json(respolnse);
+      res.status(200).json(addFarmerResult);
     } if (addFarmerResult.error) {
       return next(addFarmerResult.error);
     }
