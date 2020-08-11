@@ -15,7 +15,7 @@ router.post('/signin',farmerController.farmerSignIn);
 router.get('/fetchfarmers',farmerController.getFarmers);
  
 //router for adding new Products 
-router.post('/:id/addproduct',authRequest ,farmerController.addProducts);
+router.post('/:id/addproduct' ,farmerController.addProducts);
 
 //router to fetch products from farmer product list 
 router.get('/:id/fetch',farmerController.getProducts);
