@@ -22,7 +22,6 @@ module.exports.farmerRegistration = async (req, res, next) => {
       return next(addFarmerResult.error);
     }
   } catch (e) { 
-    console.log(e);
     return next(e) }
 }
 
@@ -52,10 +51,7 @@ module.exports.farmerSignIn = async (req, res, next) => {
 //Get Farmers from Farmers List
 module.exports.getFarmers = async (req, res, next) => {
   try {
-    console.log("here")
     const result = await farmerService.fetchFarmers();
-    console.log("3rd here");
-    
     if (result.data) {
       result.status = 200;
       result.msg = "List of Farmers";
@@ -77,7 +73,6 @@ module.exports.addProducts = async(req,res,next) => {
   
            try{
                 const result= await farmerService.addProducts(farmerId,body);
-                console.log(result)
                 if(result){
                     result.satus=200;
                     res.status(200).json({status: "ok",

@@ -23,15 +23,12 @@ class CustomerService {
     return await Customer.findOne({ email: email })
       .then((acc) => {
         if (!acc) {
-          console.log('im here');
           return false;
         }
         return {bcrypt:bcrypt.compare(password, acc.password), account:acc}
       })
       .then((data) => {
         if (!data.bcrypt) {
-          console.log(data);
-          console.log('im here');
           return data;
         }
         tokenString = jwt.sign({ email: email }, private_key, {
@@ -83,7 +80,6 @@ class CustomerService {
           return { error: 'Account not found' };
         }
         account = acc;
-        console.log(account.shopping_cart);
         return { cart: acc.shopping_cart };
       })
       .catch((err) => {

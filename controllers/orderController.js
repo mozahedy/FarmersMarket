@@ -7,7 +7,6 @@ module.exports.save = async (req, res, next) => {
     const anOrder = req.body;
     try {
         const persistResult = await orderService.save(anOrder)
-        console.log(persistResult)
         if (persistResult.data) {
             persistResult.status = 200;
             res.status(200).json(persistResult)
@@ -50,7 +49,6 @@ module.exports.getByStatusAllOrdersOfFarmer = async (req, res, next) => {
     const status = req.params.status;
     try {
         const findResult = await orderService.findByStatusAllOrdersOfFarmer(id, status)
-        console.log(findResult)
         if (findResult.data) {
             findResult.status = 200;
             res.status(200).json(findResult)
@@ -95,7 +93,6 @@ module.exports.getByStatusAllOrdersOfCustomer = async (req, res, next) => {
     const status = req.params.status;
     const dateLower = req.body.dateLower;
     const dateUpper = req.body.dateUpper;
-console.log("check",dateLower,dateUpper)
     if ((status === 'all' || status === '') && (dateLower === null || dateUpper === null)) {
         try {
             const findResult = await orderService.findAllOrdersOfCustomer(email)
@@ -134,7 +131,6 @@ console.log("check",dateLower,dateUpper)
 // and sends confirmation email to client
 module.exports.updateStatus = async (req, res, next) => {
     const orderId = req.params.orderId;
-    console.log(orderId);
     try {
         const persistResult = await orderService.updateStatus(orderId, req.body)
 
@@ -146,7 +142,6 @@ module.exports.updateStatus = async (req, res, next) => {
                 const pickupTime = dateInMilli.toLocaleTimeString('en-US');
 
                 respMsg = await emailGennerator(req.body.customerEmail, 'Customer', 'Your order is ready!', `We are pleased to inform you that your order is ready for pick-up on ${pickupDate} at ${pickupTime}`);
-                console.log(respMsg)
                 respMsg.status = 200;
                 respMsg.data = {};
                 res.status(200).json(respMsg);
