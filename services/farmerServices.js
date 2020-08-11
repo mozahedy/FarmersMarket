@@ -1,5 +1,8 @@
 const { Farmer } = require('../models/farmer');
+const jwt = require('jsonwebtoken');
+const { private_key } = require('../config/config.json');
 const { addProducts } = require('../controllers/farmerController');
+let tokenString;
 
 class farmerService {
     constructor() { }
@@ -11,7 +14,6 @@ class farmerService {
         try {          
             let farmer = new Farmer(newFarmer);
             let lastResult = await farmer.save();
-
                  return { data: lastResult };
             }
          catch (e) { 
@@ -30,7 +32,10 @@ class farmerService {
                 return {error: 'Farmer not found'}
             }
             if (user) {
-                return {data:user}
+                tokenString = jwt.sign({ email: email }, private_key, {
+                expiresIn: '2h',
+                  });
+                return {account:user, token: tokenString};
             }
         } catch (e) { return ({ error: e }) }
 
