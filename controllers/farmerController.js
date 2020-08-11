@@ -8,21 +8,22 @@ var createError = require('http-errors');
 //Farmer Registration Controller 
 module.exports.farmerRegistration = async (req, res, next) => {
   const farmer = req.body;
+  if(!farmer){
+     return next(new Error('No Farmer is found on the body'));
+  }
   try {
 
     const addFarmerResult = await farmerService.registerFarmer(farmer)
 
     if (addFarmerResult.data) {
       
-      res.status(200).json({
-        status: "ok",
-        message: "New Farmer is registered!",
-        name: addFarmerResult.data
-      });
-    } else {
-      next(createError(401, "Farmer Already Exist!"));
+      res.status(200).json(addFarmerResult);
+    } if (addFarmerResult.error) {
+      return next(addFarmerResult.error);
     }
-  } catch (e) { return next(e) }
+  } catch (e) { 
+    console.log(e);
+    return next(e) }
 }
 
 
@@ -35,14 +36,10 @@ module.exports.farmerSignIn = async (req, res, next) => {
   try {
     const result = await farmerService.farmerSignIn(email)
 
-    if (result.data) {
-      result.satus = 200;
-      res.status(200).json({
-        status: "ok",
-        messege: "Authenticated User",
-        message: "logged in user",
-        name: result.data.name.firstname,
-      });
+    if (result.account) {
+      res
+      .status(200)
+      .json({ status: "ok", account: result.account, token: result.account });
     } else {
       next(createError(401, "Authorization Failed"));
     }
@@ -60,13 +57,10 @@ module.exports.getFarmers = async (req, res, next) => {
     console.log("3rd here");
     
     if (result.data) {
-      result.satus = 200;
-      res.status(200).json({
-        status: "ok",
-        messege: "List of Farmers",
-        name: result.data,
-       
-      });
+      result.status = 200;
+      result.msg = "List of Farmers";
+
+      res.status(200).json(result);
     }
   } catch (e) { res.status(400).json({ error: "NO Farmer Records" }) }
 }

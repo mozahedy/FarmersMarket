@@ -1,4 +1,5 @@
 const orderController = require('../controllers/orderController')
+const {authRequest} = require('../middlewares/authRequest');
 
 const express = require('express');
 const router = express.Router();
@@ -8,7 +9,7 @@ router.get('/farmers/:farmerId',orderController.getAllOrdersOfFarmer);
 
 //this route will be accessed by farmer to get all order history of specific 
 //status
-router.get('/:status/farmers/:farmerId',orderController.getByStatusAllOrdersOfFarmer);
+router.get('/:status/farmers/:farmerId',authRequest,orderController.getByStatusAllOrdersOfFarmer);
 
 //this route will be accessed by customer to get all order history 
 router.get('/customers/:customerEmail',orderController.getAllOrdersOfCustomer);
