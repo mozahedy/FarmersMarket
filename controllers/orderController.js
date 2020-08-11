@@ -95,20 +95,38 @@ module.exports.getByStatusAllOrdersOfCustomer = async (req, res, next) => {
     const status = req.params.status;
     const dateLower = req.body.dateLower;
     const dateUpper = req.body.dateUpper;
+console.log("check",dateLower,dateUpper)
+    if ((status === 'all' || status === '') && (dateLower === null || dateUpper === null)) {
+        try {
+            const findResult = await orderService.findAllOrdersOfCustomer(email)
+            if (findResult.data) {
+                findResult.status = 200;
+                res.status(200).json(findResult)
+            } else if (persistResult.error) {
+                next(persistResult.error);
+            } else {
+                res.status(204);
 
-    try {
-        const findResult = await orderService.findByStatusAllOrdersOfCustomer(email, status, dateLower, dateUpper)
-        if (findResult.data) {
-            findResult.status = 200;
-            res.status(200).json(findResult)
-        } else if (persistResult.error) {
-            next(persistResult.error);
-        } else {
-            res.status(204);
+            }
 
-        }
+        } catch (e) { next(e) }
+    } else {
 
-    } catch (e) { next(e) }
+        try {
+            const findResult = await orderService.findByStatusAllOrdersOfCustomer(email, status, dateLower, dateUpper)
+            if (findResult.data) {
+                findResult.status = 200;
+                res.status(200).json(findResult)
+            } else if (persistResult.error) {
+                next(persistResult.error);
+            } else {
+                res.status(204);
+
+            }
+
+        } catch (e) { next(e) }
+
+    }
 
 }
 
@@ -127,13 +145,13 @@ module.exports.updateStatus = async (req, res, next) => {
                 const pickupDate = dateInMilli.toLocaleString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
                 const pickupTime = dateInMilli.toLocaleTimeString('en-US');
 
-                respMsg = await emailGennerator(req.body.customerEmail,'Customer', 'Your order is ready!', `We are pleased to inform you that your order is ready for pick-up on ${pickupDate} at ${pickupTime}`);
+                respMsg = await emailGennerator(req.body.customerEmail, 'Customer', 'Your order is ready!', `We are pleased to inform you that your order is ready for pick-up on ${pickupDate} at ${pickupTime}`);
                 console.log(respMsg)
                 respMsg.status = 200;
                 respMsg.data = {};
                 res.status(200).json(respMsg);
             } else if (req.body.status === 'completed') {
-                res.status(200).json({ status: 200, data:{}, msg: 'successfully updated status to completed' });
+                res.status(200).json({ status: 200, data: {}, msg: 'successfully updated status to completed' });
             }
         }
         if (persistResult.error) {
