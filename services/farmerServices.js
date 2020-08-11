@@ -11,7 +11,6 @@ class farmerService {
         try {          
             let farmer = new Farmer(newFarmer);
             let lastResult = await farmer.save();
-
                  return { data: lastResult };
             }
          catch (e) { 

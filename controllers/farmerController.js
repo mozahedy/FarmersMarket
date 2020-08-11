@@ -8,21 +8,22 @@ var createError = require('http-errors');
 //Farmer Registration Controller 
 module.exports.farmerRegistration = async (req, res, next) => {
   const farmer = req.body;
+  if(!farmer){
+     return next(new Error('No Farmer is found on the body'));
+  }
   try {
 
     const addFarmerResult = await farmerService.registerFarmer(farmer)
 
     if (addFarmerResult.data) {
       
-      res.status(200).json({
-        status: "ok",
-        message: "New Farmer is registered!",
-        name: addFarmerResult.data
-      });
-    } else {
-      next(createError(401, "Farmer Already Exist!"));
+      res.status(200).json(respolnse);
+    } if (addFarmerResult.error) {
+      return next(addFarmerResult.error);
     }
-  } catch (e) { return next(e) }
+  } catch (e) { 
+    console.log(e);
+    return next(e) }
 }
 
 
