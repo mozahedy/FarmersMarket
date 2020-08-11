@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ::1 - - [11/Aug/2020:13:51:25 +0000] "GET /api/farmers/fetchfarmers HTTP/1.1" 200 10492 "-" "PostmanRuntime/7.26.3"
 <<<<<<< HEAD
 ::1 - - [11/Aug/2020:15:08:01 +0000] "OPTIONS /api/farmers/signin HTTP/1.1" 204 0 "http://localhost:4200/home" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36"
@@ -378,3 +379,5 @@
 ::1 - - [11/Aug/2020:22:30:21 +0000] "OPTIONS /api/farmers/signin HTTP/1.1" 204 0 "http://localhost:4200/home" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36"
 ::1 - - [11/Aug/2020:22:30:21 +0000] "POST /api/farmers/signin HTTP/1.1" 200 3341 "http://localhost:4200/home" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36"
 ::1 - - [11/Aug/2020:22:30:22 +0000] "GET /api/farmers/5f2f31d0fb670fa25450e67b/fetch HTTP/1.1" 304 - "http://localhost:4200/farmers" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36"
+=======
+>>>>>>> 0aa0645a3719165d546f4e19e5baf89d9b3effe8
