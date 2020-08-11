@@ -43,7 +43,7 @@ class farmerService {
 //Start of Fetch Farmers in farmers list service
 async fetchFarmers(){
     try{
-     let fetch= await Farmer.find();
+     let fetch= await Farmer.find().sort({rating:-1});
        if(fetch){
            return {data:fetch};
        }
