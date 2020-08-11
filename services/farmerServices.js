@@ -3,33 +3,53 @@ const { addProducts } = require('../controllers/farmerController');
 
 class farmerService {
     constructor() { }
+
+
 //Start Farmer registration service 
     async registerFarmer(newFarmer) {
-        try {
-            let newfarmer = new Farmer(newFarmer);
-            result = await newfarmer.save();
+        
+        try {          
+            let farmer = new Farmer(newFarmer);
+            let lastResult = await farmer.save();
 
-            return ({ data: result });
-        } catch (e) { return ({ error: e }) }
+                 return { data: lastResult };
+            }
+         catch (e) { 
+            return { error: e};
+         } 
     }
+
+
 
 
 // Start of signin service
-    async farmerSignIn(email, password) {
+    async farmerSignIn(email) {       
         try {           
-            let user = await Farmer.findOne({ email: email });
-    
+            let user = await Farmer.findOne({ email: email });      
             if (!user) {
                 return {error: 'Farmer not found'}
             }
-
             if (user) {
                 return {data:user}
             }
-
         } catch (e) { return ({ error: e }) }
+
+
+        
     }
 //end of signin service
+
+
+//Start of Fetch Farmers in farmers list service
+async fetchFarmers(){
+    try{
+     let fetch= await Farmer.find();
+       if(fetch){
+           return {data:fetch};
+       }
+    }catch(e) { return e}
+ }
+
 
 
 
@@ -73,7 +93,7 @@ class farmerService {
     }
 
 
-//Start of Fetch products in farmers product list service
+//Start of deleting products in farmers product list service
     async deleteProducts(farmerId,productId){
        try{
         
