@@ -10,8 +10,9 @@ module.exports.addCustomer = async function (req, res, next) {
   const customer = req.body;
   try {
     const response = await customerService.saveCustomer(customer);
+    console.log(response);
     if (response.data) {
-      res.status(200).json(response.data);
+      res.status(200).json(response);
     }
     if (response.error) {
       return next(response.error);
@@ -31,9 +32,11 @@ module.exports.signIn = async function (req, res, next) {
       return next(createError(401,'Authorization Failed'));
     }
     else {
+      const token = response.token;
+      const account = response.account;
       res
         .status(200)
-        .json({ message: 'Authenticated', account: response });
+        .json({ message: 'Authenticated', account: account, token: token });
     }
   } catch (e) {
     return next(e);
