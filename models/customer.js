@@ -3,84 +3,90 @@ const mongoose = require('mongoose');
 const { required } = require('joi');
 
 const Customer = mongoose.model('Customer', new mongoose.Schema({
-  name: {
-      firstname: {
-        type: String,
-        required: true,
-        minlength: 2,
-        maxlength: 50
-      },
-      lastname: {
-        type: String,
-        required: true,
-        minlength: 2,
-        maxlength: 50
-      }
-  },
-  email: {
-    type: String,
-    required: true,
-    minlength:6,
-    maxlength:50,
-    email: true,
-    unique: true
+    name: {
+        firstname: {
+            type: String,
+            required: true,
+            minlength: 2,
+            maxlength: 50
+        },
+        lastname: {
+            type: String,
+            required: true,
+            minlength: 2,
+            maxlength: 50
+        }
     },
-  phone: {
-    type: String,
-    required: true,
-    minlength: 10,
-    maxlength: 15
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 3,
-    maxlength: 1024,
+    email: {
+        type: String,
+        required: true,
+        minlength: 6,
+        maxlength: 50,
+        email: true,
+        unique: true
+    },
+    phone: {
+        type: String,
+        required: true,
+        minlength: 10,
+        maxlength: 15
+    },
+    password: {
+        type: String,
+        required: true,
+        minlength: 3,
+        maxlength: 1024,
     },
     address: {
-        street:{
+        street: {
             type: String,
             required: true
         },
         city: {
             type: String
         },
-        state:{
+        state: {
             type: String,
-            maxlength:2,
-            minlength:2
+            maxlength: 2,
+            minlength: 2
         },
-        zip:{
+        zip: {
             type: Number,
             required: true,
-            minlength:5
+            minlength: 5
         }
     },
-/*     role: {
-        type: String,
-        required: true
-    }, */
-    shopping_cart: [{
-        product:{
-            product_name: {
-                type: String,
-                required: true
+    /*     role: {
+            type: String,
+            required: true
+        }, */
+    shopping_cart: {
+        items: [{
+            product: {
+                name: {
+                    type: String,
+                    required: true
+                },
+                unit: {
+                    type: String,
+                    required: true
+                },
+                unit_price: {
+                    type: Number,
+                    required: true
+                },
             },
-            unit: {
-                type: String,
-                required: true
-            },
-            unit_price: {
+            quantity: {
                 type: Number,
                 required: true
-            },
-        },
-        quantity: {
-            type: Number,
-            required: true 
+            }
+
+        }],
+        farmer_id: {
+            type: String,
+            required: true
         }
-        
-    }],
+    }
 }));
 
 /* 
@@ -112,5 +118,5 @@ function validateCustomer(customer) {
     return schema.validate(user);
 }
  */
-exports.Customer = Customer; 
+exports.Customer = Customer;
 //exports.validate = validateCustomer;
