@@ -68,8 +68,15 @@ module.exports.findAllOrdersOfCustomer = async (email) => {
 //filtered by status and a lower and upper boundry for order date in YYYY-MM-DD string format
 module.exports.findByStatusAllOrdersOfCustomer = async (email, status, dateLower, dateUpper) => {
 
+    let comparator;
+    if(status === 'All Status'){
+        comparator = {customer_email: email, order_date: {$gte:new Date(dateLower),$lte: new Date(dateUpper)}};
+
+    }else{
+        comparator = {customer_email: email,  status: status, order_date: {$gte:new Date(dateLower),$lte: new Date(dateUpper)}};
+    }
     try {
-        const result = await Order.find({customer_email: email,  status: status, order_date: {$gte:new Date(dateLower),$lte: new Date(dateUpper)}})
+        const result = await Order.find(comparator)
 
         return { data: result };
     } catch (e) {
