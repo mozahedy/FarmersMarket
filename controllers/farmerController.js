@@ -47,29 +47,18 @@ module.exports.farmerSignIn = async(req,res,next) => {
 //This Module is to Add Products into Farmers Product List 
 module.exports.addProducts = async(req,res,next) => {
            const body =req.body;
+           const farmerId = req.params.id;
 
-
-            // Uploading file to AWS S3 server
-             const productImage = upload.single('image');
-             productImage(req, res, async function(err) {
-              if (err) 
-                return res.status(422).send({errors: [{title: 'File Upload Error', detail: err.message}] });
-              let imageName = req.file.location.split('/');
-               body.image = getImage(imageName[3]);
-               
-               const farmerId = req.params.id;
-               try{
-                    const result= await farmerService.addProducts(farmerId,body);
-                    console.log(result)
-                    if(result){
-                        result.satus=200;
-                        res.status(200).json({status: "ok",
-                        messege: "Product is Succesfully added",
-                        name: result});
-                        }
-                       }catch(e){ }
-                       
-                    }); 
+           try{
+                const result= await farmerService.addProducts(farmerId,body);
+                console.log(result)
+                if(result){
+                    result.satus=200;
+                    res.status(200).json({status: "ok",
+                    messege: "Product is Succesfully added",
+                    name: result});
+                    }
+                   }catch(e){ }
 
 }
 //End of Add Products into Farmers list Controller 
@@ -94,7 +83,7 @@ module.exports.getProducts= async (req,res,next) => {
 //Delete products from farmers product list 
 module.exports.deleteProducts = async(req,res,next) => {
       const farmerId=req.params.id;
-      const productId="5f2f72a3563d0c488c0dab4c";
+      const productId=req.body._id;
       
       try{
         const result= await farmerService.deleteProducts(farmerId,productId);
