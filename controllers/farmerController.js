@@ -39,7 +39,7 @@ module.exports.farmerSignIn = async (req, res, next) => {
     if (result.account) {
       res
       .status(200)
-      .json({ status: "ok", account: result.account, token: result.account });
+      .json({ status: "ok", account: result.account, token: result.token });
     } else {
       next(createError(401, "Authorization Failed"));
     }
@@ -74,7 +74,7 @@ module.exports.getFarmers = async (req, res, next) => {
 module.exports.addProducts = async(req,res,next) => {
            const body =req.body;
            const farmerId = req.params.id;
-
+  
            try{
                 const result= await farmerService.addProducts(farmerId,body);
                 console.log(result)
