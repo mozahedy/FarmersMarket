@@ -9,6 +9,6 @@ router.post('/signup', password.encrypt, customerController.addCustomer);
 router.post('/signin', customerController.signIn);
 router.patch('/:id/addtocart', authRequest, customerController.addToCart);
 router.patch('/:id/removefromcart', authRequest, customerController.removeFromCart);
-router.patch('/:id/getcart', authRequest, customerController.getCartItems);
+router.get('/:id/cart', authRequest, customerController.getCartItems);
 
 module.exports = router;

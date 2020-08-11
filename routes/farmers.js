@@ -12,10 +12,12 @@ router.post('/signup', farmerController.farmerRegistration);
 router.post('/signin',farmerController.farmerSignIn);
 
 //router to fetch Farmer from farmer list 
-router.get('/fetchfarmers',farmerController.getFarmers);
+router.get('',farmerController.getFarmers);
  
 //router for adding new Products 
-router.post('/:id/addproduct',authRequest ,farmerController.addProducts);
+
+router.post('/:id/product',authRequest ,farmerController.addProducts);
+
 
 //router to fetch products from farmer product list 
 router.get('/:id/fetch',farmerController.getProducts);
@@ -26,7 +28,6 @@ router.patch('/:id/delete',farmerController.deleteProducts);
 //router to update products from farmer product list
 router.patch('/:id/update', farmerController.updateProducts);
 
-//router to fetch products from farmer product list 
-router.patch('/:id/delete',farmerController.deleteProducts);
+
 
 module.exports = router;
