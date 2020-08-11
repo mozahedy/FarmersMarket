@@ -57,13 +57,10 @@ module.exports.getFarmers = async (req, res, next) => {
     console.log("3rd here");
     
     if (result.data) {
-      result.satus = 200;
-      res.status(200).json({
-        status: "ok",
-        messege: "List of Farmers",
-        name: result.data,
-       
-      });
+      result.status = 200;
+      result.msg = "List of Farmers";
+
+      res.status(200).json(result);
     }
   } catch (e) { res.status(400).json({ error: "NO Farmer Records" }) }
 }

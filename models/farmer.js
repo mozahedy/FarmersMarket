@@ -3,68 +3,68 @@ const mongoose = require('mongoose');
 const { required } = require('joi');
 
 const Farmer = mongoose.model('Farmer', new mongoose.Schema({
-  name: {
-      firstname: {
-        type: String,
-        required: true,
-        minlength: 2,
-        maxlength: 50
-      },
-      lastname: {
-        type: String,
-        required: true,
-        minlength: 2,
-        maxlength: 50
-      }
-  },
-  email: {
-    type: String,
-    required: true,
-    minlength:6,
-    maxlength:50,
-    email: true,
-    unique: true
+    name: {
+        firstname: {
+            type: String,
+            required: true,
+            minlength: 2,
+            maxlength: 50
+        },
+        lastname: {
+            type: String,
+            required: true,
+            minlength: 2,
+            maxlength: 50
+        }
     },
-  phone: {
-    type: String,
-    required: true,
-    minlength: 10,
-    maxlength: 15
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 3,
-    maxlength: 1024,
+    email: {
+        type: String,
+        required: true,
+        minlength: 6,
+        maxlength: 50,
+        email: true,
+        unique: true
+    },
+    phone: {
+        type: String,
+        required: true,
+        minlength: 10,
+        maxlength: 15
+    },
+    password: {
+        type: String,
+        required: true,
+        minlength: 3,
+        maxlength: 1024,
     },
     address: {
-        street:{
+        street: {
             type: String,
             required: true
         },
         city: {
             type: String
         },
-        state:{
+        state: {
             type: String,
-            maxlength:2,
-            minlength:2
+            maxlength: 2,
+            minlength: 2
         },
-        zip:{
+        zip: {
             type: Number,
             required: true,
-            minlength:5
+            minlength: 5
         }
     },
-/*     role: {
-        type: String,
-        required: true
-    }, */
+    /*     role: {
+            type: String,
+            required: true
+        }, */
     rating: {
         type: Number,
         default: 0
     },
-    provided_products:[{
+    provided_products: [{
         name: {
             type: String,
             required: true,
@@ -121,5 +121,5 @@ function validateFarmer(farmer) {
     return schema.validate(user);
 }
  */
-exports.Farmer = Farmer; 
+exports.Farmer = Farmer;
 //exports.validate = validateCustomer;
