@@ -27,7 +27,7 @@ const Order = mongoose.model('Order', new mongoose.Schema({
     },
     products: [
         {
-            product_name: {
+            name: {
                 type: String,
                 required: true
             },

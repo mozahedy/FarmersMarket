@@ -4,6 +4,7 @@ const { Order } = require('../models/order')
 module.exports.save = async (order) => {
     const newOrder = new Order(order);
     try {
+        console.log(newOrder);
         const result = await newOrder.save();
         return { data: result };
     } catch (e) {

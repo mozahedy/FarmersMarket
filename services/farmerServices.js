@@ -1,7 +1,7 @@
 const { Farmer } = require('../models/farmer');
 const jwt = require('jsonwebtoken');
 const { private_key } = require('../config/config.json');
-const { addProducts } = require('../controllers/farmerController');
+
 let tokenString;
 
 class farmerService {
